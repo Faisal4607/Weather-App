@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tables and Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <div class="bg-gray-900 text-white w-1/4 md:w-1/5 p-5 flex flex-col items-center">
+            <div class="text-3xl font-semibold mb-8 animate-pulse">🌤 Weather</div>
+            <nav>
+                <ul class="space-y-4">
+                    <li><a href="index.html" class="hover:text-purple-400 text-2xl">Dashboard</a></li>
+                    <li><a href="tables.html" class="hover:text-purple-400 text-2xl">Tables</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="w-3/4 md:w-4/5 p-6 space-y-8 flex" style="background-image: url('weather2.jpg');">
+            <!-- Left: Table for 10-Day Forecast -->
+            <div class="w-2/3 bg-cover bg-center bg-no-repeat" >
+                <!-- Header -->
+                <header class="flex justify-between items-center mb-4">
+                    <div class="flex">
+                        <input type="text" id="city-input" placeholder="Enter City" class="p-2 border border-gray-300 rounded-l-lg focus:outline-none">
+                        <button id="get-weather-btn" class="p-2 bg-green-600 text-white rounded-r-lg hover:bg-green-500">Get Weather</button>
+                    </div>
+                </header>
+
+                <!-- Sorting Buttons -->
+                <div class="flex space-x-4 mb-4">
+                    <button id="sortAsc" class="p-2 bg-gradient-to-br from-gray-200 to-blue-300 font-semibold rounded-lg hover:bg-blue-500">Sort Ascending</button>
+                    <button id="sortDesc" class="p-2 bg-gradient-to-br from-gray-200 to-blue-300 font-semibold rounded-lg hover:bg-blue-500">Sort Descending</button>
+                    <button id="filterRain" class="p-2 bg-gradient-to-br from-gray-200 to-blue-300 font-semibold rounded-lg hover:bg-blue-500">Rainy Days</button>
+                    <button id="maxTemp" class="p-2 bg-gradient-to-br from-gray-200 to-blue-300 font-semibold rounded-lg hover:bg-blue-500">Hottest Days</button>
+                </div>
+
+                <!-- 10-Day Forecast Table -->
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white shadow-lg rounded-lg">
+                        <thead class="bg-blue-300 ">
+                            <tr>
+                                <th class="px-4 py-2 ">Date</th>
+                                <th class="px-4 py-2 ">Temperature (°C)</th>
+                                <th class="px-4 py-2 ">Weather Condition</th>
+                            </tr>
+                        </thead>
+                        <tbody id="forecast-table" class="text-gray-700">
+                            <!-- Dynamic data goes here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Chatbot -->
+            <div class="w-1/3 ml-6 h-96 overflow-y-auto">
+                <div class="chatbot-container bg-gradient-to-br from-gray-300 to-blue-300 shadow p-6 rounded-lg">
+                    <h1 class="text-4xl font-bold mb-4 text-center bg-gradient-to-r from-blue-800 to-green-700 text-transparent bg-clip-text">
+                        Chatbot
+                    </h1>
+                    <div class="flex space-x-4">
+                        <input type="text" id="chat-input" placeholder="Ask a question..." class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none">
+                        <button id="send-chat" class="p-2 bg-green-600 text-white rounded-lg hover:bg-green-500">Send</button>
+                    </div>
+                    <div class="chatbot-output mt-4 p-4 border bg-white border-gray-300 rounded-lg" id="chatResponse">
+                        <!-- Chatbot answers will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="tables.js"></script>
+</body>
+</html>

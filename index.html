@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+      
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+      
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+      
+        .animate-slide-up {
+            animation: slideUp 0.5s ease-out;
+        }
+      
+        .max-w-screen-md {
+            max-width: 100%;
+            width: 100%;
+        }
+      
+        @media (min-width: 256px) {
+            .max-w-screen-md {
+                max-width: 850px;
+            }
+        }
+      </style>
+      
+</head>
+<body class="bg-gray-100">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <div class="bg-gray-800 text-white w-1/4 md:w-1/5 p-5 flex flex-col items-center">
+            <div class="text-3xl font-semibold mb-8 animate-pulse">🌤 Weather</div>
+            <nav>
+                <ul class="space-y-4">
+                    <li><a href="index.html" class="hover:text-purple-400 text-2xl">Dashboard</a></li>
+                    <li><a href="tables.html" class="hover:text-purple-400 text-2xl">Tables</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="w-3/4 md:w-4/5 p-6 space-y-8 bg-cover bg-center bg-no-repeat" style="background-image: url('weather2.jpg');">
+            <!-- Header -->
+            <header class="flex justify-between items-center">
+                <div class="flex">
+                    <input type="text" id="city-input" placeholder="Enter City" class="p-2 border border-gray-300 rounded-l-lg focus:outline-none">
+                    <button id="get-weather-btn" class="p-2 bg-green-600 text-white rounded-r-lg hover:bg-green-500">Get Weather</button>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <img src="user.jpg" alt="Profile Picture" class="w-12 h-12 rounded-full">
+                </div>
+            </header>
+
+            <!-- Weather Widget -->
+        <div class="bg-gradient-to-br from-gray-200 to-blue-300 text-gray-800 p-8 rounded-lg shadow-lg w-full max-w-screen-md mx-auto animate-fade-in">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="space-y-6 flex-1">
+           
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-map-marker-alt text-3xl text-blue-500"></i>
+                        <h2 id="city-name" class="text-4xl font-semibold">City Name</h2>
+                     </div>
+                    <p id="description" class="italic text-xl">Weather: --</p>
+
+                    <div class="bg-blue-200 p-6 rounded-lg shadow-md flex items-center space-x-4 animate-slide-up">
+                        <i class="fas fa-temperature-high text-5xl text-red-500"></i>
+                        <p id="temperature" class="text-3xl font-bold">--°C</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6 flex-1 md:pl-8 mt-8 md:mt-0">
+                    <div class="bg-blue-200 p-4 rounded-lg shadow-md flex justify-between items-center animate-slide-up">
+                        <i class="fas fa-tint text-3xl text-blue-500"></i>
+                        <p id="humidity" class="text-xl">Humidity: --%</p>
+                    </div>
+
+                    <div class="bg-blue-200 p-4 rounded-lg shadow-md flex justify-between items-center animate-slide-up">
+                        <i class="fas fa-wind text-3xl text-blue-500"></i>
+                        <p id="wind-speed" class="text-xl">Wind Speed: -- m/s</p>
+                    </div>
+
+                    <div class="bg-blue-200 p-4 rounded-lg shadow-md flex justify-between items-center animate-slide-up">
+                        <i class="fas fa-calendar-day text-3xl text-blue-500"></i>
+                        <p id="date" class="text-xl">Date: --</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="forecastbox flex justify-between mt-6 space-x-4">
+            <!-- Day 1 -->
+            <div class="forecast-day bg-gradient-to-br from-gray-200 to-blue-300  p-4 shadow-lg rounded-lg w-40 flex flex-col items-center">
+                <h3 id="day1-date" class="text-xl font-bold mb-2">Day 1</h3>
+                <i id="day1-icon" class="fas fa-cloud text-xl"></i>
+                <p id="day1-temp" class="text-3xl mt-2">--°C</p>
+            </div>
+        
+            <!-- Day 2 -->
+            <div class="forecast-day bg-gradient-to-br from-gray-200 to-blue-300  p-4 shadow-lg rounded-lg w-40 flex flex-col items-center">
+                <h3 id="day2-date" class="text-xl font-bold mb-2">Day 2</h3>
+                <i id="day2-icon" class="fas fa-cloud-sun text-4xl"></i>
+                <p id="day2-temp" class="text-3xl mt-2">--°C</p>
+            </div>
+        
+            <!-- Day 3 -->
+            <div class="forecast-day bg-gradient-to-br from-gray-200 to-blue-300  p-4 shadow-lg rounded-lg w-40 flex flex-col items-center">
+                <h3 id="day3-date" class="text-xl font-bold mb-2">Day 3</h3>
+                <i id="day3-icon" class="fas fa-sun text-4xl"></i>
+                <p id="day3-temp" class="text-3xl mt-2">--°C</p>
+            </div>
+        
+            <!-- Day 4 -->
+            <div class="forecast-day bg-gradient-to-br from-gray-200 to-blue-300  p-4 shadow-lg rounded-lg w-40 flex flex-col items-center">
+                <h3 id="day4-date" class="text-xl font-bold mb-2">Day 4</h3>
+                <i id="day4-icon" class="fas fa-cloud-showers-heavy text-4xl"></i>
+                <p id="day4-temp" class="text-3xl mt-2">--°C</p>
+            </div>
+        
+            <!-- Day 5 -->
+            <div class="forecast-day bg-gradient-to-br from-gray-200 to-blue-300  p-4 shadow-lg rounded-lg w-40 flex flex-col items-center">
+                <h3 id="day5-date" class="text-xl font-bold mb-2">Day 5</h3>
+                <i id="day5-icon" class="fas fa-snowflake text-4xl"></i>
+                <p id="day5-temp" class="text-3xl mt-2">--°C</p>
+            </div>
+        </div>
+
+            <!-- Weather Charts -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div class="bg-gradient-to-br from-gray-200 to-blue-300  rounded-lg p-4">
+                    <canvas id="barChart" class="max-h-64 max-w-full"></canvas>
+                </div>
+                <div class="bg-gradient-to-br from-gray-200 to-blue-300 rounded-lg p-4">
+                    <canvas id="doughnutChart" class="max-h-64 max-w-full"></canvas>
+                </div>
+                <div class="bg-gradient-to-br from-gray-200 to-blue-300 rounded-lg p-4">
+                    <canvas id="lineChart" class="max-h-64 max-w-full"></canvas>
+                </div>
+                </div>
+            </div>
+
+    </div>
+</div>
+    <script src="index.js"></script> 
+</body>
+</html>
+
+
